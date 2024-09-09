@@ -16,6 +16,9 @@ const char* CurlHeaderFailure::what() {
   return "CURL failed to add header";
 }
 
+CurlPerformFailure::CurlPerformFailure(CURLcode curl_code) {
+  CurlPerformFailure::curl_code = curl_code;
+}
 CURLcode CurlPerformFailure::get_error_code() {
   return CurlPerformFailure::curl_code;
 }

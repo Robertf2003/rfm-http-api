@@ -57,7 +57,7 @@ static CURLcode setup_curl(CURL **curl_handle, long *response_code,
     const char *api_http_link, const std::basic_string<char> *json_str) {
   CURLcode resCode = CURLE_OK;
   // init the curl session 
-  if((*curl_handle = curl_easy_init())) {
+  if(!(*curl_handle = curl_easy_init())) {
     throw new CurlInitializeFailure();
   }
 
@@ -91,7 +91,6 @@ static void setup_headers(curl_slist **slist, std::vector<std::string> headers) 
     }
     *slist = temp_slist;
   }
-    std::cout <<"headout\n";
 }
 
 ApiResponseAndJson_t CurlApiJsonFetcher::get_data(std::string api_http_link,
@@ -120,7 +119,6 @@ ApiResponseAndJson_t CurlApiJsonFetcher::get_data(std::string api_http_link,
   if(res != CURLE_OK) {
     throw new CurlPerformFailure(res);
   }
-
 
   return {response_code, *json_str};
 }
